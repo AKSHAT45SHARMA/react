@@ -1,0 +1,31 @@
+{
+  "name": "lec-1",
+  "version": "1.0.0",
+  "description": "this is lecture one",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKSHAT45SHARMA/react.git#main"
+  },
+  "keywords": [
+    "learning"
+  ],
+  "author": "Akshat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKSHAT45SHARMA/react/issues"
+  },
+  "homepage": "https://github.com/AKSHAT45SHARMA/react/tree/main#readme",
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "browserLists": {
+    "last 2 version"
+  }
+}
