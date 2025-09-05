@@ -1,13 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import Reactdom from "react-dom/client";
 
 //React Element => object =>redered into dom => HTMLELEMENT
 //react element is not a html element ..
 //it create a object.
 
 // this is very clumsy way to write like this type of code.but this is core of react..not development freindly.not readable.
-// const heading = React.createElement("h1", { id: "heading" }, "oye akshat react pad le");
 
+// const heading = React.createElement("h1", { id: "heading" }, "oye akshat react pad le");
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // console.log(root);
 
@@ -15,8 +15,8 @@ import ReactDOM from "react-dom/client";
 //this id not html.this is JSX.JSX is html like syntax.. 
 // this jsx is react element..
 // both code are totally same..
-// const jsxHeading =(<h1 id="heading"> Namaste React using JSX</h1>);
 
+// const jsxHeading =(<h1 id="heading"> Namaste React using JSX</h1>);
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 
 //React component(normal js function)-> 2 type
@@ -42,5 +42,5 @@ const HeadingComponent =() =>(
 );
 
 // root.render(jsxHeading); REACT ELEMENT READER LIKE THIS ..
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = Reactdom.createRoot(document.getElementById("root"));
 root.render(<HeadingComponent/>);
