@@ -1,0 +1,31 @@
+{
+  "name": "lec4-build_project",
+  "version": "1.0.0",
+  "description": "build a online food dilevery app",
+  
+  "scripts": {
+    "start": "npx parcel index.html",
+    "build": "npm parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKSHAT45SHARMA/react.git"
+  },
+  "keywords": [
+    "laerning",
+    "build",
+    "project"
+  ],
+  "author": "Akshat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKSHAT45SHARMA/react/issues"
+  },
+  "homepage": "https://github.com/AKSHAT45SHARMA/react#readme",
+  "dependencies": {
+    "parcel": "^2.15.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}
