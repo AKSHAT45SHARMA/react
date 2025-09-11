@@ -34,8 +34,18 @@ import Reactdom from "react-dom/client";
 const title = (
     1000
 );
+const Title2 = () =>(
+    <div>
+        <h1> I am jsx functional component...</h1>
+    </div>
+)
 const HeadingComponent =() =>(
     <div id="container">
+    {/* ways to call component.... */}
+    <Title2/>
+    <Title2></Title2>
+    {Title2()}
+
     {title}  
     <h1> Namaste React Functional Component</h1>
     </div>

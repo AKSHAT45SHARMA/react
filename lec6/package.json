@@ -1,31 +1,32 @@
 {
-  "name": "lec-1",
+  "name": "react-hook",
   "version": "1.0.0",
-  "description": "this is lecture one",
+  "description": "learning react hook",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "npx parcel index.html",
+    "build": "npx parcel build index.html"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AKSHAT45SHARMA/react.git#main"
+    "url": "git+https://github.com/AKSHAT45SHARMA/react.git"
   },
   "keywords": [
-    "learning"
+    "react",
+    "react",
+    "hook"
   ],
   "author": "Akshat",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AKSHAT45SHARMA/react/issues"
   },
-  "homepage": "https://github.com/AKSHAT45SHARMA/react/tree/main#readme",
+  "homepage": "https://github.com/AKSHAT45SHARMA/react#readme",
   "devDependencies": {
     "parcel": "^2.15.4"
   },
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
-  },
-  "browserLists": [
-    "last 2 version"
-  ]
+  }
 }

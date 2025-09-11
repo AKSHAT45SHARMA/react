@@ -1,246 +1,232 @@
-# React Q&A
+# 📘 React Basics & Best Practices
 
-## ❓ Question 1
+## 1) 📂 What is the src folder?
 
-Why does filtering an imported array in React
-(`resList = resList.filter(...)`) not work, while filtering a locally
-defined array does? How can this issue be fixed correctly?
+In almost every React project (and other frontend frameworks), the **src** folder means “source code”.
 
-### ✅ Answer
+It contains all the code you write → components, styles, logic, assets.
 
-### 🔹 The Problem
+When the project is built, bundlers like Webpack/Vite take the code from `src`, optimize it, and output it into a `build` (or `dist`) folder.
 
--   When you define an array **inside a component**, like:
+👉 **Industry convention:**
+src/components/ → reusable components
+src/pages/ → full page components
+src/assets/ → images, icons, fonts
+src/utils/ → helper functions
+src/App.js → root component
 
-    ``` js
-    let resList = [ ... ]; // local variable
-    ```
+pgsql
+Copy code
 
-    you can reassign it using:
+---
 
-    ``` js
-    resList = resList.filter(...);
-    ```
+## 2) ⚡ Restructuring App.js into components
 
-    This works because `resList` is just a local variable.
+When your app grows, you split UI into smaller components for readability.  
+To share data/functions between files, you use **import/export**.
 
--   But when you **import** it:
+### Example
 
-    ``` js
-    import resList from "../utilis/mock";
-    ```
+**Button.js**
+```jsx
+export default function Button({ text }) {
+  return <button>{text}</button>;
+}
+App.js
 
-    and try:
+jsx
+Copy code
+import Button from "./Button"; // importing default export
 
-    ``` js
-    resList = resList.filter(...);
-    ```
+export default function App() {
+  return <Button text="Click me!" />;
+}
+✅ Ways of sharing:
 
-    it doesn't work.
+Props → pass data from parent to child.
 
-------------------------------------------------------------------------
+State lifting → manage data in parent and pass down.
 
-### 🔹 Why This Happens
+Context API → share data globally.
 
--   **ES6 module imports are immutable bindings**.\
+Custom Hooks → reusable logic.
 
--   That means you **cannot reassign** an imported variable.\
+3) 🚫 Hard-coded data in components
+Best practice → don’t hardcode values inside components.
+Instead, keep them in a separate file or fetch dynamically.
 
--   Example:
+👉 Bad:
 
-    ``` js
-    import resList from "./mock";
-    resList = [] // ❌ not allowed
-    ```
+jsx
+Copy code
+function User() {
+  return <p>Name: Akshat</p>;
+}
+👉 Good:
 
--   You *can* mutate contents if it's an object/array, but you cannot
-    reassign the variable.
+jsx
+Copy code
+const userData = { name: "Akshat" };
 
-------------------------------------------------------------------------
+function User({ data }) {
+  return <p>Name: {data.name}</p>;
+}
+4) 📦 Types of Export and Import
+🔹 Default Export
+Only one default export per file.
 
-### 🔹 Correct Fixes
+Imported without curly braces.
 
-#### ✅ Option 1: Make a local copy inside the component
+Use when file is about one main thing.
 
-``` jsx
-import resList from "../utilis/mock";
+jsx
+Copy code
+// Button.js
+export default function Button() {}
 
-const Body = () => {
-  let localResList = [...resList]; // copy
+// App.js
+import Button from "./Button";
+🔹 Named Export
+You can have multiple named exports.
 
-  return (
-    <div className="body">
-      <button
-        onClick={() => {
-          localResList = localResList.filter(r => Number(r.data.avgRating) > 4);
-          console.log(localResList);
-        }}
-      >
-        Top Rated Restaurant
-      </button>
+Must be imported with curly braces.
 
-      <div className="res-container">
-        {localResList.map(r => (
-          <RestaurantCard key={r.data.id} resData={r} />
-        ))}
-      </div>
-    </div>
-  );
-};
-```
+jsx
+Copy code
+// utils.js
+export function add(a, b) { return a + b; }
+export function multiply(a, b) { return a * b; }
 
-------------------------------------------------------------------------
+// App.js
+import { add, multiply } from "./utils";
+👉 When to use:
 
-#### ✅ Option 2: Use React State (Best Practice)
+Default → when one main export.
 
-``` jsx
-import resList from "../utilis/mock";
+Named → when you have multiple utilities/functions/constants.
+
+
+
+5) ❓ Can I use default + named export in same file?
+Yes ✅ but not with the same variable name.
+
+👉 Example:
+
+jsx
+Copy code
+export default function Button() {}
+export const SIZE = "large";
+
+// Import
+import Button, { SIZE } from "./Button";
+
+
+6) 🪝 What are Hooks?
+Hooks = special functions in React.
+
+They let function components do things that only class components could do earlier (like state, lifecycle).
+
+👉 Uses:
+
+Manage state → useState
+
+Run side effects → useEffect
+
+Access context → useContext
+
+Create reusable logic → custom hooks
+
+👉 Where used?
+
+Inside functional components.
+
+Never inside loops or conditions (must always run in same order).
+
+
+
+7) 🔥 useState() and useEffect()
+🟢 useState
+Lets you add state to a functional component.
+
+jsx
+Copy code
 import { useState } from "react";
 
-const Body = () => {
-  const [restaurants, setRestaurants] = useState(resList);
+function Counter() {
+  const [count, setCount] = useState(0);
 
   return (
-    <div className="body">
-      <button
-        onClick={() => {
-          setRestaurants(restaurants.filter(r => Number(r.data.avgRating) > 4));
-        }}
-      >
-        Top Rated Restaurant
-      </button>
-
-      <div className="res-container">
-        {restaurants.map(r => (
-          <RestaurantCard key={r.data.id} resData={r} />
-        ))}
-      </div>
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
     </div>
   );
-};
-```
+}
+✅ Benefits: makes components interactive.
 
-------------------------------------------------------------------------
+🟢 useEffect
+Runs code when a component renders or updates.
+Perfect for: fetching data, timers, subscriptions.
 
-### 🔹 TL;DR
+jsx
+Copy code
+import { useEffect, useState } from "react";
 
--   Local array → reassignment works.\
--   Imported array → cannot reassign (ES6 module rule).\
--   ✅ Fix: Either make a local copy, or better → use `useState`.
+function Users() {
+  const [users, setUsers] = useState([]);
 
-------------------------------------------------------------------------
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []); // empty array = run only once
 
-## ❓ Question 2
+  return <ul>{users.map(u => <li key={u.id}>{u.name}</li>)}</ul>;
+}
+✅ Benefits: run side effects without blocking UI.
 
-The problem:
+👉 Import like this:
 
-In your working version, you declared `resList` inside the component:
+jsx
+Copy code
+import { useState, useEffect } from "react";
 
-``` js
-let resList = [ ... ]; // defined in Body.js
-```
 
-`resList` is a local variable.
+8) ⚡ Reconciliation, Virtual DOM, React Fiber & Diffing
+🌐 Virtual DOM
+A lightweight copy of the real DOM in memory.
 
-When you do `resList = resList.filter(...)`, it works perfectly because
-you're reassigning the local variable.
+React updates this first, then updates only the changed parts in the real DOM.
 
-When you import `resList` from mock.js:
+🔄 Reconciliation
+The process React uses to compare old tree vs new tree and update only what changed.
 
-``` js
-import resList from "../utilis/mock";
-```
+🧮 Diffing Algorithm
+Different element types → replace whole subtree.
 
-Modules in JS are **read-only views** of the exported values.\
-You cannot reassign the imported `resList` in React (or JS modules).
+Same type → update attributes + recurse children.
 
-So this line inside your component:
+Use keys to track items in lists.
 
-``` js
-resList = resList.filter(r => Number(r.data.avgRating) > 4);
-```
+This makes updates very fast.
 
-will not actually change the imported array --- it either throws an
-error (if using const) or silently fails depending on bundler settings.
+⚡ React Fiber
+Fiber = new engine for reconciliation (introduced in React 16).
 
-### 🔹 Why this happens:
+👉 Benefits:
 
--   **ES6 module imports are immutable bindings.**
--   You can mutate the contents of objects/arrays if they're objects,
-    but reassigning the variable itself is not allowed.
--   So `resList.filter(...)` creates a new array --- but `resList = ...`
-    tries to reassign the imported binding, which doesn't work.
+Can pause work and resume later.
 
-### 🔹 Correct ways to fix it
+Can prioritize important updates (like animations).
 
-**Option 1: Make a local copy in the component**
+Enables features like concurrent rendering.
 
-``` jsx
-import resList from "../utilis/mock";
+✅ In short
 
-const Body = () => {
-  let localResList = [...resList];
+Virtual DOM → blueprint of UI.
 
-  return (
-    <div className="body">
-      <div className="filter">
-        <button
-          className="filter-btn"
-          onClick={() => {
-            localResList = localResList.filter(r => Number(r.data.avgRating) > 4);
-            console.log(localResList);
-          }}
-        >
-          Top Rated Restaurant
-        </button>
-      </div>
-      <div className="res-container">
-        {localResList.map(r => (
-          <RestaurantCard key={r.data.id} resData={r} />
-        ))}
-      </div>
-    </div>
-  );
-};
-```
+Reconciliation → process of updating efficiently.
 
-**Option 2: Use React state (recommended)**
+Diffing algorithm → rules to compare old vs new.
 
-``` jsx
-import resList from "../utilis/mock";
-import { useState } from "react";
-
-const Body = () => {
-  const [restaurants, setRestaurants] = useState(resList);
-
-  return (
-    <div className="body">
-      <div className="filter">
-        <button
-          className="filter-btn"
-          onClick={() => {
-            setRestaurants(restaurants.filter(r => Number(r.data.avgRating) > 4));
-            console.log(restaurants);
-          }}
-        >
-          Top Rated Restaurant
-        </button>
-      </div>
-      <div className="res-container">
-        {restaurants.map(r => (
-          <RestaurantCard key={r.data.id} resData={r} />
-        ))}
-      </div>
-    </div>
-  );
-};
-```
-
-------------------------------------------------------------------------
-
-### 🔹 TL;DR
-
--   Local array inside the component → `resList = resList.filter(...)`
-    works.\
--   Imported array → you cannot reassign it.\
--   ✅ Fix: Copy it locally or use React state (`useState(resList)`).
+React Fiber → advanced engine that makes reconciliation faster & smarter.
