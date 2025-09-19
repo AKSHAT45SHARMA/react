@@ -1,7 +1,7 @@
 {
-  "name": "react-hook",
+  "name": "class Component",
   "version": "1.0.0",
-  "description": "learning react hook",
+  "description": "learning react Class based Component",
   "scripts": {
     "test": "jest",
     "start": "npx parcel index.html",
@@ -28,6 +28,6 @@
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.1"
+    "react-router-dom": "^6.26.2"
   }
 }
