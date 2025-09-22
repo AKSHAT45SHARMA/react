@@ -1,0 +1,33 @@
+{
+  "name": "lec9",
+  "version": "1.0.0",
+  "description": "learning react,Optimization",
+  "scripts": {
+    "test": "jest",
+    "start": "npx parcel index.html",
+    "build": "npx parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKSHAT45SHARMA/react.git"
+  },
+  "keywords": [
+    "react",
+    "react",
+    "hook"
+  ],
+  "author": "Akshat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKSHAT45SHARMA/react/issues"
+  },
+  "homepage": "https://github.com/AKSHAT45SHARMA/react#readme",
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^6.26.2"
+  }
+}
